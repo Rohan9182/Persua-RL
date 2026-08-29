@@ -418,6 +418,18 @@ h3:first-child { margin-top: 0; }
 p { margin: 0 0 1.15rem; max-width: var(--measure); }
 p:last-child { margin-bottom: 0; }
 
+/* Body copy sets flush on both edges, the way the paper itself is typeset.
+   Headings, bylines and table cells are left out on purpose. */
+.abstract p,
+.section p,
+.section ul li,
+figcaption,
+.tcap,
+.colophon p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 .abstract p {
   font-size: 1.125rem;
   line-height: 1.8;
@@ -624,6 +636,17 @@ code {
   .section { padding: 2.5rem 0; }
   .abstract p { font-size: 1.0625rem; }
   figcaption { padding-left: 0.75rem; }
+
+  /* the column gets too narrow for gap-free justification */
+  .abstract p,
+  .section p,
+  .section ul li,
+  figcaption,
+  .tcap,
+  .colophon p {
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
 
   /* too little room for the full title beside the section links */
   .mark-full { display: none; }
