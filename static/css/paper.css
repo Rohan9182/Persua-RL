@@ -23,7 +23,7 @@
 
   /* One content column for the whole page: text, rules, figures, tables and
      captions all share the same left and right edge. */
-  --measure: 45rem;
+  --measure: 48rem;
 
   /* rounded corners + soft elevation, so panels read as cards rather than
      hard-edged rectangles */
@@ -226,11 +226,13 @@ a:hover { border-bottom-color: var(--accent); background: rgba(31, 58, 95, 0.05)
 .paper-title {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(1.6rem, 1rem + 1.9vw, 2.4rem);
-  line-height: 1.22;
+  /* sized so the title settles into three balanced lines in the 45rem column */
+  font-size: clamp(1.5rem, 0.95rem + 1.7vw, 2.2rem);
+  line-height: 1.24;
   letter-spacing: -0.012em;
   margin: 0 0 1.75rem;
   max-width: 100%;      /* fills the content column */
+  text-align: left;
   text-wrap: balance;
 }
 .paper-title em {
