@@ -13,9 +13,7 @@
 
        IMAGES needed in static/images/ (lowercase, no spaces):
          architecture.png    - Figure 1, selector/generator/reward architecture
-         reward_curves.png   - training reward curves (paper Figure 6)
-         ablation_tools.png  - AllExpert vs Prompting vs PersuaRL bars (paper Figure 2)
-         qualitative.png     - single vs SFT vs PersuaRL example (paper Figure 3)
+         qualitative.png     - Figure 2, single vs SFT vs PersuaRL example
          social_preview.png  - 1200x630 link-preview card
          favicon.ico         - optional
 
@@ -26,7 +24,7 @@
   <meta name="title" content="PersuaRL: Reinforcement Learning-Driven Multi-Expert Selection for Persuasive Dialogue Generation in Insurance">
   <meta name="description" content="PersuaRL learns, via GRPO, which expert modules to consult at each dialogue turn to generate persuasive motor-insurance responses. Introduces InsureDial, a 1,931-dialogue persuasive insurance dataset.">
   <meta name="keywords" content="PersuaRL, InsureDial, persuasive dialogue, reinforcement learning, GRPO, multi-expert selection, tool-augmented LLM, dialogue generation, insurance NLP, EMNLP">
-  <meta name="author" content="Rohan Kirti, Akash Ghosh, Aryan Vats, Niladri Ghosh, Shipra Shriparn, Sriparna Saha, Roshni Ramnani, Anutosh Maitra">
+  <meta name="author" content="Rohan Kirti, Akash Ghosh, Aryan Vats, Niladri Ghosh, Shipra Shriparn, Roshni Ramnani, Anutosh Maitra, Sriparna Saha">
   <meta name="robots" content="index, follow">
   <meta name="language" content="English">
 
@@ -55,9 +53,9 @@
   <meta name="citation_author" content="Vats, Aryan">
   <meta name="citation_author" content="Ghosh, Niladri">
   <meta name="citation_author" content="Shriparn, Shipra">
-  <meta name="citation_author" content="Saha, Sriparna">
   <meta name="citation_author" content="Ramnani, Roshni">
   <meta name="citation_author" content="Maitra, Anutosh">
+  <meta name="citation_author" content="Saha, Sriparna">
   <meta name="citation_publication_date" content="2026">
   <meta name="citation_conference_title" content="Findings of the Association for Computational Linguistics: EMNLP 2026">
   <meta name="citation_pdf_url" content="PAPER_URL">
@@ -91,9 +89,9 @@
       { "@type": "Person", "name": "Aryan Vats", "affiliation": { "@type": "Organization", "name": "Indian Institute of Technology Patna" } },
       { "@type": "Person", "name": "Niladri Ghosh", "affiliation": { "@type": "Organization", "name": "Ramakrishna Mission Vivekananda Educational and Research Institute" } },
       { "@type": "Person", "name": "Shipra Shriparn", "affiliation": { "@type": "Organization", "name": "Indian Institute of Technology Patna" } },
-      { "@type": "Person", "name": "Sriparna Saha", "affiliation": { "@type": "Organization", "name": "Indian Institute of Technology Patna" } },
       { "@type": "Person", "name": "Roshni Ramnani", "affiliation": { "@type": "Organization", "name": "Accenture Labs, Bangalore" } },
-      { "@type": "Person", "name": "Anutosh Maitra", "affiliation": { "@type": "Organization", "name": "Accenture Labs, Bangalore" } }
+      { "@type": "Person", "name": "Anutosh Maitra", "affiliation": { "@type": "Organization", "name": "Accenture Labs, Bangalore" } },
+      { "@type": "Person", "name": "Sriparna Saha", "affiliation": { "@type": "Organization", "name": "Indian Institute of Technology Patna" } }
     ],
     "datePublished": "2026",
     "publisher": { "@type": "Organization", "name": "Association for Computational Linguistics" },
@@ -120,9 +118,6 @@
         <a href="#method">Method</a>
         <a href="#dataset">InsureDial</a>
         <a href="#results">Results</a>
-        <a href="#ablations">Ablations</a>
-        <a href="#qualitative">Analysis</a>
-        <a href="#ethics">Ethics</a>
         <a href="#bibtex">BibTeX</a>
       </nav>
     </div>
@@ -136,10 +131,7 @@
     <a href="#method"><span class="toc-num">02</span><span>How PersuaRL Works</span></a>
     <a href="#dataset"><span class="toc-num">03</span><span>InsureDial</span></a>
     <a href="#results"><span class="toc-num">04</span><span>Results</span></a>
-    <a href="#ablations"><span class="toc-num">05</span><span>Ablation Studies</span></a>
-    <a href="#qualitative"><span class="toc-num">06</span><span>Qualitative Analysis</span></a>
-    <a href="#ethics"><span class="toc-num">07</span><span>Ethical Considerations</span></a>
-    <a href="#bibtex"><span class="toc-num">08</span><span>Citation</span></a>
+    <a href="#bibtex"><span class="toc-num">05</span><span>Citation</span></a>
   </nav>
 
   <main id="top">
@@ -163,9 +155,9 @@
         Aryan Vats<sup>1</sup>,
         Niladri Ghosh<sup>2</sup>,
         Shipra Shriparn<sup>1</sup>,
-        Sriparna Saha<sup>1</sup>,
         Roshni Ramnani<sup>3</sup>,
-        Anutosh Maitra<sup>3</sup>
+        Anutosh Maitra<sup>3</sup>,
+        Sriparna Saha<sup>1</sup>
       </p>
       <p class="affil">
         <sup>1</sup>&thinsp;Indian Institute of Technology Patna, India<br>
@@ -221,7 +213,7 @@
           <b>Figure 1.</b> <i>PersuaRL</i> architecture. At each dialogue turn, a GRPO-trained
           <b>Selector</b> emits a binary mask over four expert modules; the selected expert outputs are
           packed with the dialogue context and passed to a fine-tuned <b>Generator</b>. A five-component
-          composite reward scores the generated response and drives the selector's policy update.
+          composite reward scores the response and drives the selector's policy update.
         </figcaption>
       </figure>
 
@@ -267,106 +259,70 @@
         <h2 class="section-title">How PersuaRL Works</h2>
       </div>
 
-      <p>
-        Prior tool-augmented and persuasive dialogue systems rely on static prompting, heuristic
-        routing, or monolithic generation. PersuaRL instead reconceptualizes expert coordination as a
-        <b>context-conditioned decision problem</b>: choosing the right combination of experts becomes a
-        learnable action rather than a heuristic choice. PersuaRL is the first framework to learn expert
-        selection policies for persuasion via reinforcement learning, letting the selector and generator
-        co-adapt over multi-turn interactions rather than following a pre-specified routing rule.
+      <p class="lead">
+        Prior persuasive dialogue systems rely on static prompting, heuristic routing, or monolithic
+        generation. PersuaRL instead treats expert coordination as a <b>context-conditioned decision
+        problem</b>, running each dialogue turn through four coupled stages.
       </p>
 
-      <h3>Problem formulation</h3>
-      <p>
-        Given a dialogue context <i>x<sub>t</sub></i> &mdash; the conversation history plus the current
-        user utterance &mdash; the goal is to generate a persuasive response <i>y<sub>t</sub></i>. A
-        selector policy <i>&pi;<sub>&theta;</sub></i> emits a binary mask
-        <i>o<sub>t</sub></i> &isin; {0,1}<sup>n</sup>, where <i>o<sub>t,i</sub></i> = 1 activates expert
-        <i>T<sub>i</sub></i>. Each selected expert produces
-        <i>O<sub>i</sub></i> = <i>T<sub>i</sub></i>(<i>x<sub>t</sub></i>), which is packed with the
-        dialogue context into an augmented prompt, and a generator <i>A<sub>&phi;</sub></i> produces the
-        response. The dialogue context is the state and the expert-selection mask is the action. During
-        training the history follows the gold dialogue, so the selection at turn <i>t</i> does not alter
-        the context at turn <i>t</i>+1: the selector therefore solves a context-conditioned, single-step
-        decision problem at every turn, with the reward computed on that turn's response.
-      </p>
+      <div class="cards">
 
-      <h3>1. Selector &mdash; GRPO over a combinatorial action space</h3>
-      <p>
-        Persuasive dialogue requires balancing competing objectives: engagement strategy, intent
-        alignment, coherence, and diversity. Existing tool-use RL methods target factual tasks with
-        objective correctness signals, whereas persuasion involves subjective, interacting rewards that
-        demand a different optimization strategy. The selector is optimised with
-        <b>Group Relative Policy Optimization (GRPO)</b>: for each state, multiple expert selections are
-        sampled from the previous policy and evaluated with a frozen generator, and the policy is updated
-        using a clipped policy-gradient objective with KL regularization against a reference policy. This
-        gives stable learning over the combinatorial expert-selection space.
-      </p>
+        <div class="card">
+          <span class="card-icon" aria-hidden="true">&#127919;</span>
+          <h3><span class="num">&#9312;</span> Selector &mdash; GRPO</h3>
+          <p>
+            At each turn the selector emits a <b>binary mask</b> over the four experts &mdash; whom to
+            consult is a learned action, not a heuristic.
+          </p>
+          <p>
+            <b>Group Relative Policy Optimization</b> samples several selections per state, scores them
+            with a frozen generator, and updates the policy with a clipped objective under KL
+            regularization.
+          </p>
+        </div>
 
-      <h3>2. Experts &mdash; four persuasion competencies</h3>
-      <p>
-        Persuasive communication requires knowing what the user wants, how they feel, what they are
-        discussing, and how best to engage them. Each expert is a decoder-only transformer fine-tuned
-        independently for one subtask:
-      </p>
-      <ul>
-        <li><b>Engagement Expert</b> &mdash; selects the persuasion strategy for the turn, over six labels:
-            Logical Appeal, Credibility Appeal, Emotional Appeal, Personal Appeal, Persona Appeal, and Default.</li>
-        <li><b>Intent Expert</b> &mdash; classifies the user's goal over six intents: Request Quote, Ask
-            Coverage Details, Express Concern, Request Additional Info, Confirm Interest, and Ask Price/Premium.</li>
-        <li><b>Keyterm Expert</b> &mdash; extracts domain-critical terms such as <i>zero depreciation</i>,
-            <i>roadside assistance</i>, or <i>no claim bonus</i>, output as a structured keyphrase list.</li>
-        <li><b>Sentiment Expert</b> &mdash; detects emotional tone as Positive, Neutral, or Negative,
-            trained with a cross-entropy classification loss.</li>
-      </ul>
+        <div class="card">
+          <span class="card-icon" aria-hidden="true">&#129513;</span>
+          <h3><span class="num">&#9313;</span> Four Expert Modules</h3>
+          <p>Each expert is fine-tuned for one persuasion competency:</p>
+          <ul class="kv">
+            <li><b>Engagement</b> &mdash; the turn's strategy, six labels.</li>
+            <li><b>Intent</b> &mdash; the user's goal, six intents.</li>
+            <li><b>Keyterm</b> &mdash; terms like <i>zero depreciation</i>.</li>
+            <li><b>Sentiment</b> &mdash; Positive, Neutral or Negative.</li>
+          </ul>
+          <p>Selected outputs are packed with the context for the generator.</p>
+        </div>
 
-      <h3>3. Composite reward &mdash; five components</h3>
-      <p>
-        Persuasive effectiveness cannot be captured by a single metric: a response might be strategically
-        appropriate but miss the user's intent, or address intent accurately while lacking emotional
-        resonance. Prior work evaluates persuasion with post-hoc human judgments but does not use those
-        dimensions during training. PersuaRL provides explicit training signal for five:
-      </p>
-      <ul>
-        <li><b>R1 &mdash; Engagement Strategy Consistency.</b> A fine-tuned BERT strategy classifier
-            (82.1% accuracy on InsureDial) yields per-strategy prototype embeddings; the reward scores the
-            response's cosine compatibility with the user's inferred strategy distribution.</li>
-        <li><b>R2 &mdash; Intent Consistency.</b> The same construction over a BERT intent classifier
-            (84.9% accuracy) and six intent prototypes.</li>
-        <li><b>R3 &mdash; Contextual Appropriateness.</b> BERTScore-F1 against the full dialogue context
-            and the current user utterance, with the latest user turn weighted double, then normalised and
-            clipped to [0,1].</li>
-        <li><b>R4 &mdash; Non-Repetitiveness.</b> One minus the Jaccard overlap between the current
-            response and the previous agent response, discouraging stagnant dialogue.</li>
-        <li><b>R5 &mdash; Judge Reward.</b> Prometheus-7B-v2.0 acting as an LLM judge, scoring
-            persuasiveness, negotiation effectiveness, and user engagement.</li>
-      </ul>
-      <p>
-        The total reward is a convex combination of the five components. Weights were selected by held-out
-        perplexity search, giving &beta; = (0.15, 0.15, 0.20, 0.15, 0.35). Three auxiliary penalties shape
-        selector behaviour: a <b>complexity penalty</b> (&alpha; = 0.025 per selected expert) discouraging
-        over-selection, a <b>route repetition penalty</b> (&beta; = 0.2, capped at 0.15) preventing policy
-        collapse onto a single route, and a <b>load balance penalty</b> (&gamma; = 0.4, capped at 0.15)
-        keeping any one expert from dominating.
-      </p>
+        <div class="card">
+          <span class="card-icon" aria-hidden="true">&#9878;&#65039;</span>
+          <h3><span class="num">&#9314;</span> Composite Reward</h3>
+          <p>No single metric captures persuasion, so five signals combine:</p>
+          <ul class="kv">
+            <li><b>R1 / R2</b> &mdash; strategy and intent consistency.</li>
+            <li><b>R3</b> &mdash; contextual appropriateness.</li>
+            <li><b>R4</b> &mdash; non-repetitiveness.</li>
+            <li><b>R5</b> &mdash; judge score from Prometheus-7B.</li>
+          </ul>
+          <p class="card-note">
+            &beta; = (0.15, 0.15, 0.20, 0.15, 0.35), plus penalties against over-selection.
+          </p>
+        </div>
 
-      <h3>4. Training setup</h3>
-      <p>
-        All experiments ran on a single A100 80GB, roughly 25&ndash;28 hours per model, in PyTorch and
-        Hugging Face. Decoding used nucleus sampling (<i>T</i> = 0.8, <i>p</i> = 0.9); training used AdamW
-        at learning rate 2&times;10<sup>&minus;5</sup>, clipping &epsilon; = 0.2, 15 epochs, seed 10.
-        Inference used max_tokens = 512, <i>T</i> = 0.8, top-<i>k</i> = 40, top-<i>p</i> = 0.95.
-      </p>
+        <div class="card">
+          <span class="card-icon" aria-hidden="true">&#9881;&#65039;</span>
+          <h3><span class="num">&#9315;</span> Training &amp; Inference</h3>
+          <p>
+            The generator is fine-tuned on InsureDial first; the selector is then optimised against it, so
+            the two co-adapt over multi-turn dialogue rather than following a fixed routing rule.
+          </p>
+          <p class="card-note">
+            Single A100 80GB, 25&ndash;28 h per model. AdamW at 2&times;10<sup>&minus;5</sup>,
+            &epsilon; = 0.2, nucleus sampling (<i>T</i> = 0.8, <i>p</i> = 0.9).
+          </p>
+        </div>
 
-      <figure>
-        <img src="static/images/reward_curves.png"
-             alt="GRPO training reward curves for Llama, Qwen and Phi backbones">
-        <figcaption>
-          <b>Figure 2.</b> Training reward during GRPO. Llama reaches the highest final reward, Qwen
-          converges stably, and Phi converges faster but to a lower plateau &mdash; reflecting differences
-          in model capacity and learning stability.
-        </figcaption>
-      </figure>
+      </div>
     </div>
   </section>
 
@@ -380,30 +336,12 @@
 
       <p>
         No persuasive dialogue dataset existed for the motor insurance domain. <b>InsureDial</b> contains
-        <b>1,931 multi-turn conversations</b> and over <b>26,000 utterances</b> between users and agents,
-        covering real-world scenarios such as policy quotes, coverage details, and price inquiries, with
-        rich domain terminology drawn from an analysis of leading motor insurance providers &mdash;
-        discounts, value-added services, coverage types, and add-ons.
-      </p>
-
-      <h3>Construction</h3>
-      <p>
-        The corpus was built with a semi-automated, human-in-the-loop pipeline. Trained annotators first
-        authored <b>50 seed dialogues</b>, one playing the user and one the agent, deliberately covering
-        the full range of persuasive intents; agent utterances were validated with domain experts. Five
-        candidate prompts were then compared by generating 25 dialogues each with GPT-4o
-        (<i>T</i> = 0.8, top-<i>p</i> = 0.95) and rating them on a three-point persuasive-quality scale,
-        reaching substantial inter-annotator agreement (&kappa; = 80.2%). The best-scoring prompt drove
-        full-scale generation, followed by human review and filtering.
-      </p>
-
-      <h3>Annotation</h3>
-      <p>
-        Every dialogue is annotated along four dimensions: <b>engagement strategy</b> (six labels),
-        <b>user intent</b> (six labels), <b>sentiment</b> (three labels), and <b>key domain terms</b>.
-        Five trained annotators hand-labelled 75 gold dialogues, which seeded few-shot prompts for
-        Gemini-2.0-Flash; a 30-dialogue pilot was fully human-reviewed before the remainder was
-        annotated, with human verification kept in the loop throughout.
+        <b>1,931 multi-turn conversations</b> and over <b>26,000 utterances</b> covering policy quotes,
+        coverage details and price inquiries, with terminology drawn from leading motor insurance
+        providers. It was built with a human-in-the-loop pipeline &mdash; 50 expert-validated seed
+        dialogues, prompt selection at &kappa; = 80.2% agreement, GPT-4o generation, then human review
+        &mdash; and every dialogue is annotated for engagement strategy, user intent, sentiment and key
+        domain terms.
       </p>
 
       <p class="tcap"><b>Table 1.</b> InsureDial statistics. The corpus is split 80/5/15 with diversity maintained across splits.</p>
@@ -432,125 +370,120 @@
         <h2 class="section-title">Results</h2>
       </div>
 
+      <!-- three views of the same experiment: automatic metrics, human ratings,
+           and the ablation. Panels are switched by static/js/paper.js. -->
+      <div class="tabs" role="tablist" aria-label="Results views">
+        <button class="tab is-active" type="button" role="tab" id="tabbtn-auto"
+                aria-controls="tabpanel-auto" aria-selected="true">Automatic Evaluation</button>
+        <button class="tab" type="button" role="tab" id="tabbtn-human"
+                aria-controls="tabpanel-human" aria-selected="false" tabindex="-1">Human Evaluation</button>
+        <button class="tab" type="button" role="tab" id="tabbtn-ablation"
+                aria-controls="tabpanel-ablation" aria-selected="false" tabindex="-1">Ablation Study</button>
+      </div>
+
+      <div class="tab-panel is-active" id="tabpanel-auto" role="tabpanel" aria-labelledby="tabbtn-auto">
       <p>
-        We evaluate with BLEU-2 (B-2), METEOR (MT), BERT-F1 (BF1), DISTINCT-2 (D-2), ROUGE-1 (R1), and
-        LLM-as-a-Judge (LLM-J), against closed-source and open-weight baselines in a single-shot setting
-        plus a supervised fine-tuning baseline. PersuaRL is instantiated on Llama-3.2-3B-Instruct,
-        Phi-3-mini, Qwen-2.5-3B-Instruct and Mistral-24B-Instruct, each evaluated under three regimes:
-        single-shot, SFT, and PersuaRL.
+        PersuaRL is instantiated on Qwen-2.5-3B, Llama-3.2-3B and Phi-3-mini, each evaluated in three
+        regimes: single-shot, after supervised fine-tuning, and with PersuaRL.
       </p>
 
-      <p class="tcap"><b>Table 2.</b> Automatic evaluation on InsureDial and the out-of-domain DEAL dataset.
-         Best result within each model group in <b>bold</b>. Results are statistically significant at the
-         5% level by t-test. LLM-J is omitted for GPT models to avoid evaluation bias, since the judge is
-         itself GPT-based.</p>
+      <p class="tcap"><b>Table 2.</b> Automatic evaluation on InsureDial. Higher is better on every
+         metric; best result within each model group in <b>bold</b>.</p>
       <div class="table-scroll">
         <table>
           <thead>
             <tr>
-              <th>Model</th><th>B-2 &uarr;</th><th>MT &uarr;</th><th>BF1 &uarr;</th><th>D-2 &uarr;</th><th>R1 &uarr;</th><th>LLM-J &uarr;</th>
+              <th>Model</th>
+              <th>BLEU-2</th>
+              <th>METEOR</th>
+              <th>BERTScore F1</th>
+              <th>Distinct-2</th>
+              <th>ROUGE-1</th>
+              <th>LLM Judge</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td colspan="7">InsureDial</td></tr>
-            <tr><td>GPT-5</td><td>0.036</td><td>0.093</td><td>0.828</td><td>0.982</td><td>0.232</td><td>&ndash;</td></tr>
-            <tr><td>GPT-4.1 mini</td><td>0.124</td><td>0.143</td><td>0.620</td><td>0.998</td><td>0.383</td><td>&ndash;</td></tr>
-            <tr><td>DeepSeek R1 Distill Llama 70B</td><td>0.069</td><td>0.125</td><td>0.569</td><td>0.920</td><td>0.260</td><td>4.25</td></tr>
-            <tr><td>Llama 3.3 70B Instruct</td><td>0.126</td><td>0.137</td><td>0.610</td><td>0.996</td><td>0.377</td><td>4.16</td></tr>
-            <tr><td>Qwen 3 32B</td><td>0.107</td><td>0.132</td><td>0.588</td><td>0.998</td><td>0.371</td><td>3.84</td></tr>
-            <tr><td>Phi-3-Medium 14B</td><td>0.169</td><td>0.167</td><td>0.655</td><td>0.995</td><td>0.441</td><td>3.78</td></tr>
-            <tr><td>Qwen 2.5 7B Instruct</td><td>0.124</td><td>0.145</td><td>0.604</td><td>0.958</td><td>0.385</td><td>3.66</td></tr>
-            <tr><td>Llama 3.1 8B Instruct</td><td>0.132</td><td>0.146</td><td>0.605</td><td>0.966</td><td>0.388</td><td>3.67</td></tr>
             <tr><td>Qwen 2.5 3B Instruct (Single)</td><td>0.090</td><td>0.128</td><td>0.562</td><td>0.965</td><td>0.310</td><td>2.66</td></tr>
             <tr><td>Qwen 2.5 3B Instruct (SFT)</td><td>0.305</td><td>0.217</td><td>0.727</td><td>0.991</td><td>0.556</td><td>3.28</td></tr>
-            <tr><td><b>PersuaRL (Qwen 2.5 3B)</b></td><td><b>0.375</b></td><td><b>0.250</b></td><td><b>0.760</b></td><td>0.991</td><td><b>0.609</b></td><td><b>3.81</b></td></tr>
+            <tr class="is-ours"><td><b>PersuaRL (Qwen 2.5 3B)</b></td><td><b>0.375</b></td><td><b>0.250</b></td><td><b>0.760</b></td><td>0.991</td><td><b>0.609</b></td><td><b>3.81</b></td></tr>
             <tr><td>Llama 3.2 3B Instruct (Single)</td><td>0.106</td><td>0.135</td><td>0.585</td><td>0.937</td><td>0.334</td><td>2.86</td></tr>
             <tr><td>Llama 3.2 3B Instruct (SFT)</td><td>0.339</td><td>0.232</td><td>0.742</td><td>0.989</td><td>0.584</td><td>3.48</td></tr>
-            <tr><td><b>PersuaRL (Llama 3.2 3B)</b></td><td><b>0.398</b></td><td><b>0.276</b></td><td><b>0.771</b></td><td>0.989</td><td><b>0.631</b></td><td><b>3.95</b></td></tr>
+            <tr class="is-ours"><td><b>PersuaRL (Llama 3.2 3B)</b></td><td><b>0.398</b></td><td><b>0.276</b></td><td><b>0.771</b></td><td>0.989</td><td><b>0.631</b></td><td><b>3.95</b></td></tr>
             <tr><td>Phi 3 mini 128k (Single)</td><td>0.181</td><td>0.156</td><td>0.641</td><td>0.980</td><td>0.429</td><td>2.79</td></tr>
             <tr><td>Phi 3 mini 128k (SFT)</td><td>0.362</td><td>0.242</td><td>0.752</td><td>0.988</td><td>0.600</td><td>3.39</td></tr>
-            <tr><td><b>PersuaRL (Phi 3 mini)</b></td><td><b>0.374</b></td><td><b>0.261</b></td><td><b>0.762</b></td><td><b>0.990</b></td><td><b>0.611</b></td><td><b>3.86</b></td></tr>
-            <tr><td>Mistral 24B Instruct (Single)</td><td>0.043</td><td>0.094</td><td>0.772</td><td>0.898</td><td>0.195</td><td>3.02</td></tr>
-            <tr><td>Mistral 24B Instruct (SFT)</td><td>0.324</td><td>0.226</td><td>0.815</td><td>0.990</td><td>0.574</td><td>3.65</td></tr>
-            <tr><td><b>PersuaRL (Mistral 24B)</b></td><td><b>0.355</b></td><td><b>0.241</b></td><td><b>0.873</b></td><td><b>0.992</b></td><td><b>0.596</b></td><td><b>4.12</b></td></tr>
-            <tr><td colspan="7">DEAL &mdash; out-of-domain, tourism negotiation</td></tr>
-            <tr><td>Llama 3.2 3B Instruct (Single)</td><td>0.049</td><td>0.085</td><td>0.519</td><td>0.937</td><td>0.195</td><td>2.41</td></tr>
-            <tr><td>Llama 3.2 3B Instruct (SFT)</td><td>0.080</td><td>0.104</td><td>0.552</td><td>0.986</td><td>0.267</td><td>2.64</td></tr>
-            <tr><td><b>PersuaRL (Llama 3.2 3B)</b></td><td><b>0.087</b></td><td>0.101</td><td>0.536</td><td><b>0.987</b></td><td><b>0.278</b></td><td><b>2.79</b></td></tr>
-            <tr><td>Phi 3 mini 128k (Single)</td><td>0.086</td><td>0.106</td><td>0.552</td><td>0.973</td><td>0.265</td><td>2.37</td></tr>
-            <tr><td>Phi 3 mini 128k (SFT)</td><td>0.089</td><td>0.110</td><td>0.558</td><td>0.984</td><td>0.273</td><td>2.56</td></tr>
-            <tr><td><b>PersuaRL (Phi 3 mini)</b></td><td><b>0.094</b></td><td><b>0.121</b></td><td><b>0.568</b></td><td><b>0.985</b></td><td><b>0.281</b></td><td><b>2.72</b></td></tr>
+            <tr class="is-ours"><td><b>PersuaRL (Phi 3 mini)</b></td><td><b>0.374</b></td><td><b>0.261</b></td><td><b>0.762</b></td><td><b>0.990</b></td><td><b>0.611</b></td><td><b>3.86</b></td></tr>
           </tbody>
         </table>
       </div>
 
       <p>
-        PersuaRL consistently outperforms all baselines on InsureDial. PersuaRL on Llama-3.2-3B reaches
-        BF1 &asymp; 0.771, B-2 &asymp; 0.398 and R1 &asymp; 0.631, beating much larger 14&ndash;70B
-        baseline models: PersuaRL on Phi-3-mini exceeds Phi-3-Medium-14B by roughly 16% and Qwen-3-32B by
-        over 23% in BERT-F1. SFT helps models adapt to the insurance domain but saturates at surface-level
-        generation; PersuaRL consistently pushes past that plateau. On the out-of-domain DEAL negotiation
-        benchmark, the Single &rarr; SFT &rarr; PersuaRL ordering holds for every backbone, suggesting the
-        learned selector policies capture domain-agnostic persuasion patterns such as intent adaptation
-        and strategic framing rather than dataset-specific heuristics.
+        The Single &rarr; SFT &rarr; PersuaRL ordering holds on every backbone. SFT adapts a model to the
+        insurance domain but saturates at surface-level generation; PersuaRL pushes past that plateau,
+        adding up to 0.07 BLEU-2 and 0.05 ROUGE-1 over the fine-tuned model, alongside the largest gains
+        in judge score. The same ordering holds on the out-of-domain DEAL negotiation benchmark reported in the
+        paper, suggesting the learned selector policies capture domain-agnostic persuasion patterns.
       </p>
+      </div>
 
-      <h3>Human evaluation</h3>
+      <div class="tab-panel" id="tabpanel-human" role="tabpanel" aria-labelledby="tabbtn-human" hidden>
       <p>
-        Annotators with insurance-dialogue expertise assessed 30% of a randomly sampled InsureDial test
-        set across five dimensions on a 5-point scale: Fluency (F), Engagingness (E), Persuasive
-        Effectiveness (PE), Strategy Appropriateness (SA), and Resistance Handling (RH). Fluency,
-        Engagingness and Strategy Appropriateness are judged per turn; Persuasive Effectiveness and
-        Resistance Handling are judged per dialogue.
+        Annotators with insurance-dialogue expertise rated 30% of a randomly sampled test set on five
+        dimensions, each on a 5-point scale. Fluency, engagingness and strategy appropriateness are judged
+        per turn; persuasive effectiveness and resistance handling per dialogue.
       </p>
 
-      <p class="tcap"><b>Table 3.</b> Human evaluation on InsureDial. The Single &rarr; SFT &rarr; PersuaRL trend holds
-         consistently at 3B&ndash;24B scale.</p>
+      <p class="tcap"><b>Table 3.</b> Human evaluation on InsureDial. Higher is better on every
+         dimension.</p>
       <div class="table-scroll">
         <table>
           <thead>
-            <tr><th>Model</th><th>F &uarr;</th><th>E &uarr;</th><th>PE &uarr;</th><th>SA &uarr;</th><th>RH &uarr;</th></tr>
+            <tr>
+              <th>Model</th>
+              <th>Fluency</th>
+              <th>Engagingness</th>
+              <th>Persuasive Effectiveness</th>
+              <th>Strategy Appropriateness</th>
+              <th>Resistance Handling</th>
+            </tr>
           </thead>
           <tbody>
             <tr><td>Llama 3.1 8B Instruct (Single)</td><td>2.47</td><td>2.31</td><td>2.13</td><td>2.39</td><td>2.94</td></tr>
             <tr><td>Llama 3.1 8B Instruct (SFT)</td><td>3.11</td><td>2.94</td><td>2.46</td><td>2.88</td><td>3.38</td></tr>
-            <tr><td><b>PersuaRL (Llama 3.1 8B)</b></td><td><b>4.12</b></td><td><b>4.51</b></td><td><b>4.36</b></td><td><b>4.29</b></td><td><b>4.46</b></td></tr>
+            <tr class="is-ours"><td><b>PersuaRL (Llama 3.1 8B)</b></td><td><b>4.12</b></td><td><b>4.51</b></td><td><b>4.36</b></td><td><b>4.29</b></td><td><b>4.46</b></td></tr>
             <tr><td>Qwen 2.5 3B Instruct (Single)</td><td>2.69</td><td>2.45</td><td>2.29</td><td>2.68</td><td>3.10</td></tr>
             <tr><td>Qwen 2.5 3B Instruct (SFT)</td><td>3.19</td><td>2.98</td><td>2.86</td><td>3.10</td><td>3.61</td></tr>
-            <tr><td><b>PersuaRL (Qwen 2.5 3B)</b></td><td><b>3.94</b></td><td><b>4.22</b></td><td><b>4.23</b></td><td><b>4.06</b></td><td><b>4.32</b></td></tr>
+            <tr class="is-ours"><td><b>PersuaRL (Qwen 2.5 3B)</b></td><td><b>3.94</b></td><td><b>4.22</b></td><td><b>4.23</b></td><td><b>4.06</b></td><td><b>4.32</b></td></tr>
             <tr><td>Mistral 24B Instruct (Single)</td><td>2.98</td><td>2.81</td><td>2.53</td><td>2.74</td><td>3.27</td></tr>
             <tr><td>Mistral 24B Instruct (SFT)</td><td>3.23</td><td>3.34</td><td>3.10</td><td>3.19</td><td>3.76</td></tr>
-            <tr><td><b>PersuaRL (Mistral 24B)</b></td><td><b>4.26</b></td><td><b>4.39</b></td><td><b>4.54</b></td><td><b>4.33</b></td><td><b>4.45</b></td></tr>
+            <tr class="is-ours"><td><b>PersuaRL (Mistral 24B)</b></td><td><b>4.26</b></td><td><b>4.39</b></td><td><b>4.54</b></td><td><b>4.33</b></td><td><b>4.45</b></td></tr>
           </tbody>
         </table>
       </div>
-    </div>
-  </section>
-
-  <!-- ============================== ABLATIONS ============================== -->
-  <section class="section tinted" id="ablations">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="section-num">05</span>
-        <h2 class="section-title">Ablation Studies</h2>
       </div>
 
-      <h3>Expert modules</h3>
+      <div class="tab-panel" id="tabpanel-ablation" role="tabpanel" aria-labelledby="tabbtn-ablation" hidden>
       <p>
-        Removing any expert degrades performance, confirming that each contributes meaningfully.
-        Engagement and Intent have the most pronounced impact &mdash; excluding either causes notable
-        drops in semantic alignment and relevance. The Keyterm and Sentiment experts matter less
-        individually, but their removal still produces a measurable decline in overall quality.
+        Removing any expert degrades performance. Engagement and Intent matter most; Keyterm and Sentiment
+        contribute less individually but still produce a measurable decline. Replacing the learned selector
+        with always-on experts or prompt-based routing also loses ground &mdash; ROUGE-1 drops from 0.631
+        to 0.572 for prompting on Llama-3B.
       </p>
 
       <p class="tcap"><b>Table 4.</b> Expert-module ablation on the Qwen 2.5 3B backbone.</p>
       <div class="table-scroll">
         <table>
           <thead>
-            <tr><th>Configuration</th><th>B-2 &uarr;</th><th>MT &uarr;</th><th>BF1 &uarr;</th><th>D-2 &uarr;</th><th>R1 &uarr;</th></tr>
+            <tr>
+              <th>Configuration</th>
+              <th>BLEU-2</th>
+              <th>METEOR</th>
+              <th>BERTScore F1</th>
+              <th>Distinct-2</th>
+              <th>ROUGE-1</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><b>PersuaRL (full)</b></td><td><b>0.375</b></td><td><b>0.250</b></td><td><b>0.760</b></td><td><b>0.991</b></td><td><b>0.609</b></td></tr>
+            <tr class="is-ours"><td><b>PersuaRL (full)</b></td><td><b>0.375</b></td><td><b>0.250</b></td><td><b>0.760</b></td><td><b>0.991</b></td><td><b>0.609</b></td></tr>
             <tr><td>&minus; Engagement Expert</td><td>0.284</td><td>0.202</td><td>0.704</td><td>0.983</td><td>0.539</td></tr>
             <tr><td>&minus; Intent Expert</td><td>0.293</td><td>0.216</td><td>0.713</td><td>0.983</td><td>0.558</td></tr>
             <tr><td>&minus; Keyterm Expert</td><td>0.302</td><td>0.223</td><td>0.721</td><td>0.984</td><td>0.566</td></tr>
@@ -558,124 +491,25 @@
           </tbody>
         </table>
       </div>
-
-      <h3>Reward components</h3>
-      <p>
-        R1 (Engagement), R2 (Intent) and R5 (Judge) are the most impactful, directly driving PersuaRL's
-        persuasive and context-aware behaviour. R3 and R4 provide complementary benefits through
-        contextual alignment and response diversity. Removing the full reward set collapses performance
-        toward the SFT level.
-      </p>
-
-      <p class="tcap"><b>Table 5.</b> Reward ablation on the Qwen 2.5 3B backbone.</p>
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr><th>Configuration</th><th>B-2 &uarr;</th><th>MT &uarr;</th><th>BF1 &uarr;</th><th>D-2 &uarr;</th><th>R1 &uarr;</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><b>PersuaRL (full)</b></td><td><b>0.375</b></td><td><b>0.250</b></td><td><b>0.760</b></td><td><b>0.991</b></td><td><b>0.609</b></td></tr>
-            <tr><td>&minus; R1 (Engagement Strategy Consistency)</td><td>0.341</td><td>0.214</td><td>0.694</td><td>0.965</td><td>0.521</td></tr>
-            <tr><td>&minus; R2 (Intent Consistency)</td><td>0.349</td><td>0.220</td><td>0.706</td><td>0.969</td><td>0.536</td></tr>
-            <tr><td>&minus; R3 (Contextual Appropriateness)</td><td>0.351</td><td>0.229</td><td>0.721</td><td>0.985</td><td>0.563</td></tr>
-            <tr><td>&minus; R4 (Non-Repetitiveness)</td><td>0.357</td><td>0.234</td><td>0.729</td><td>0.989</td><td>0.571</td></tr>
-            <tr><td>&minus; R5 (Judge)</td><td>0.342</td><td>0.219</td><td>0.701</td><td>0.966</td><td>0.529</td></tr>
-            <tr><td>&minus; (R1 + R2)</td><td>0.335</td><td>0.211</td><td>0.691</td><td>0.961</td><td>0.511</td></tr>
-            <tr><td>&minus; all rewards</td><td>0.323</td><td>0.205</td><td>0.684</td><td>0.948</td><td>0.501</td></tr>
-          </tbody>
-        </table>
       </div>
-
-      <h3>Does the selector earn its keep?</h3>
-      <p>
-        We compare three routing regimes: <b>AllExpert</b> (every expert always active), <b>Prompting</b>
-        (the LLM is prompted to choose tools), and <b>PersuaRL</b> (reward-driven selection). PersuaRL
-        wins on every metric and both backbones. AllExpert performs reasonably but suffers from
-        unnecessary activations that introduce noise and reduce generation precision; prompting alone
-        cannot capture dynamic, context-sensitive tool usage. The gap is largest on ROUGE-1 &mdash; 0.631
-        for PersuaRL on Llama-3B against 0.572 for prompting &mdash; reflecting better content alignment
-        with no loss of output diversity.
-      </p>
-
-      <figure>
-        <img src="static/images/ablation_tools.png"
-             alt="Ablation comparing AllExpert, prompt-based routing, and reward-driven PersuaRL">
-        <figcaption>
-          <b>Figure 3.</b> BLEU-2, BERTScore-F1 and ROUGE-1 under (a) all tools with no selector,
-          (b) tools selected via prompting, and (c) reward-driven selection with <i>PersuaRL</i>.
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- ============================== QUALITATIVE ============================== -->
-  <section class="section" id="qualitative">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="section-num">06</span>
-        <h2 class="section-title">Qualitative Analysis</h2>
-      </div>
-
-      <p>
-        Two differences separate PersuaRL from the single-shot and SFT variants. First, PersuaRL responses
-        are more empathetic and user-centric, opening by acknowledging the user's situation before
-        presenting coverage; SFT responses are informative but neutral, listing features without
-        user-centric framing. Second, PersuaRL shows greater fluency and structure, weaving technical
-        coverage details together with contextual reassurance rather than enumerating them. Single-shot
-        and SFT achieve factual completeness but miss the emotional framing that drives persuasion.
-      </p>
 
       <figure>
         <img src="static/images/qualitative.png"
              alt="Comparison of single-shot, SFT and PersuaRL responses to the same user utterance">
         <figcaption>
-          <b>Figure 4.</b> Responses to the same input utterance from the single-shot baseline, the SFT
-          model, and <i>PersuaRL</i>.
+          <b>Figure 2.</b> Responses to the same user utterance from the single-shot baseline, the SFT
+          model, and <i>PersuaRL</i>. PersuaRL opens by acknowledging the user's situation before
+          presenting coverage, where the baselines list features without user-centric framing.
         </figcaption>
       </figure>
     </div>
   </section>
 
-  <!-- ============================== ETHICS ============================== -->
-  <section class="section tinted" id="ethics">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="section-num">07</span>
-        <h2 class="section-title">Ethical Considerations</h2>
-      </div>
-
-      <p>
-        This work treats persuasion as <b>decision support rather than decision enforcement</b>. User
-        autonomy is preserved: responses align with user intent, sentiment and context without applying
-        coercive or repetitive pressure. Because inaccuracies in the insurance domain can cause financial
-        harm, particular care was taken with factual accuracy. InsureDial was developed with a
-        human-in-the-loop process, with domain experts validating seed dialogues and annotators verifying
-        model-generated conversations, and with strategies and intents explicitly annotated to support
-        context-aware persuasion across multi-turn interactions. Annotators were compensated at $10/hour
-        for utterance authoring and $5/hour for verification.
-      </p>
-
-      <h3>Limitations</h3>
-      <ul>
-        <li>InsureDial is built with a semi-automated pipeline in which GPT-4o generates dialogues later
-            filtered by humans; this may introduce synthetic artifacts and may not fully capture real
-            user behaviour.</li>
-        <li>The expert-selection policy operates over a binary mask, so the action space grows
-            exponentially with the number of experts, which can hinder scalability despite GRPO's
-            stabilizing effect.</li>
-        <li>Invoking multiple experts per turn increases inference latency, computational cost and system
-            complexity &mdash; roughly 1.4&times; the inference time of the SFT baseline.</li>
-        <li>Compute constraints limited evaluation to smaller open-weight backbones; applying the full
-            framework with large-scale LLMs as both selector and generator remains future work.</li>
-      </ul>
-    </div>
-  </section>
-
   <!-- ============================== BIBTEX ============================== -->
-  <section class="section" id="bibtex">
+  <section class="section tinted" id="bibtex">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-num">08</span>
+        <span class="section-num">05</span>
         <h2 class="section-title">Citation</h2>
       </div>
 
@@ -694,8 +528,8 @@
   title     = {PersuaRL: Reinforcement Learning-Driven Multi-Expert Selection for
                Persuasive Dialogue Generation in Insurance},
   author    = {Kirti, Rohan and Ghosh, Akash and Vats, Aryan and Ghosh, Niladri and
-               Shriparn, Shipra and Saha, Sriparna and Ramnani, Roshni and
-               Maitra, Anutosh},
+               Shriparn, Shipra and Ramnani, Roshni and Maitra, Anutosh and
+               Saha, Sriparna},
   booktitle = {Findings of the Association for Computational Linguistics:
                EMNLP 2026},
   year      = {2026},

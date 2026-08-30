@@ -70,6 +70,34 @@
     syncMasthead();
   }
 
+  // --- tabbed panels ---------------------------------------------------
+  Array.prototype.forEach.call(document.querySelectorAll('.tabs'), function (bar) {
+    var tabs = Array.prototype.slice.call(bar.querySelectorAll('.tab'));
+
+    function show(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        if (panel) panel.hidden = !on;
+      });
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { show(tab); });
+      tab.addEventListener('keydown', function (e) {
+        var step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!step) return;
+        e.preventDefault();
+        var next = tabs[(i + step + tabs.length) % tabs.length];
+        show(next);
+        next.focus();
+      });
+    });
+  });
+
   // --- highlight the section currently in view -------------------------
   // Marks the matching link in the top nav and in the side contents rail
   // with .is-active; each stylesheet decides what that looks like.

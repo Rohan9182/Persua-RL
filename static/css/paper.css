@@ -397,12 +397,131 @@ figcaption b, .tcap b { color: var(--ink-soft); }
 
 h2.section-title {
   font-family: var(--sans);
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: 1.1875rem;
+  font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   margin: 0;
 }
+
+/* ------------------------------------------------------------------ cards
+   Stage cards: one per step of the method, two to a row. */
+
+.lead {
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+}
+
+/* square tiles. `aspect-ratio` cannot do this: on a grid item it suppresses
+   stretch alignment, so the tiles stop matching each other. Instead the rows
+   are 1fr (every tile the same height) and, once the column is at full width,
+   a min-height equal to the computed column width squares them off:
+   (48rem measure - 3rem padding - 1.1rem gap) / 2. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 1.1rem;
+  max-width: var(--measure);
+  margin: 1.9rem 0 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem 1.5rem 1.35rem;
+}
+
+.card-icon {
+  display: block;
+  font-size: 1.35rem;
+  line-height: 1;
+  margin-bottom: 0.7rem;
+}
+
+.card h3 {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--accent);
+  margin: 0 0 0.7rem;
+}
+.card h3 .num { color: var(--accent-dim); margin-right: 0.15rem; }
+
+/* inside a card the column is narrow: ragged right beats justified */
+.card p,
+.card ul {
+  max-width: none;
+  text-align: left;
+  font-size: 0.9375rem;
+  line-height: 1.56;
+  margin: 0 0 0.7rem;
+}
+.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+
+/* term — description lines, no bullet */
+.card ul.kv li { padding-left: 0; margin-bottom: 0.35rem; }
+.card ul.kv li::before { content: none; }
+.card ul.kv li:last-child { margin-bottom: 0; }
+
+/* the closing note sits on the floor of the tile */
+/* only where the content column has reached its full 48rem: below that the
+   tiles are narrower, and a fixed height would make them portrait */
+@media (min-width: 51rem) {
+  .card { min-height: 21.95rem; }
+}
+
+.card-note {
+  margin-top: auto;
+  background: var(--panel);
+  border-left: 3px solid var(--accent-dim);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------------------- tabs
+   Switches between panels of one section (used in Results). Without JS the
+   first panel stays open and the rest keep their `hidden` attribute. */
+
+.tabs {
+  display: flex;
+  gap: 1.9rem;
+  max-width: var(--measure);
+  margin: 0 0 1.6rem;
+  border-bottom: 1px solid var(--rule);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 0.5rem 0.1rem 0.6rem;
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.tab:hover { color: var(--ink); }
+.tab.is-active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab:focus-visible { outline: 2px solid var(--accent-dim); outline-offset: 3px; }
+
+.tab-panel[hidden] { display: none; }
 
 h3 {
   font-family: var(--serif);
@@ -494,13 +613,14 @@ sub, sup { line-height: 0; }
   margin: 2.25rem 0 0.75rem;
 }
 
+/* Ruled grid rather than open booktabs: with this many numeric columns the
+   vertical rules are what let a reader track a value back to its heading. */
 .table-scroll {
   overflow-x: auto;
   max-width: var(--measure);
   margin-bottom: 1.5rem;
-  padding: 0.35rem 0.9rem 0.15rem;
   background: #fff;
-  border: 1px solid var(--rule-soft);
+  border: 1px solid var(--rule);
   border-radius: var(--r-md);
   box-shadow: var(--shadow-sm);
 }
@@ -514,32 +634,56 @@ table {
   white-space: nowrap;
 }
 
+/* headings carry the metric name in full, so they wrap onto two lines and
+   sit on the baseline of the tallest one */
 thead th {
-  text-align: right;
+  text-align: center;
+  vertical-align: bottom;
+  white-space: normal;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--ink);
-  padding: 0.5rem 0.75rem;
-  border-top: 1.5px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
+  line-height: 1.3;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: var(--panel);
+  padding: 0.7rem 0.6rem 0.55rem;
+  border-right: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--rule);
 }
-thead th:first-child { text-align: left; }
+thead th:first-child { text-align: left; color: var(--ink); }
+thead th:last-child { border-right: 0; }
 
 tbody td {
-  text-align: right;
-  padding: 0.42rem 0.75rem;
+  text-align: center;
+  padding: 0.48rem 0.6rem;
+  border-right: 1px solid var(--rule-soft);
   border-bottom: 1px solid var(--rule-soft);
   color: var(--ink-soft);
 }
+tbody td:last-child { border-right: 0; }
+tbody tr:last-child td { border-bottom: 0; }
+
 tbody td:first-child {
   text-align: left;
   color: var(--ink);
   white-space: normal;
-  min-width: 15rem;
+  min-width: 11.5rem;
 }
-tbody tr:last-child td { border-bottom: 1.5px solid var(--ink); }
 
 tbody td b { color: var(--ink); }
+
+/* banding: at this row count the eye needs help staying on one line */
+tbody tr:nth-child(even) td { background: rgba(22, 24, 28, 0.022); }
+
+/* our own systems: tinted across the row so they are findable at a glance */
+tbody tr.is-ours td {
+  background: rgba(31, 58, 95, 0.07);
+  color: var(--ink);
+  font-weight: 500;
+}
+tbody tr.is-ours td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+tbody tr.is-ours td b { color: var(--accent); }
 
 /* group heading row: <td colspan> */
 tbody td[colspan] {
@@ -550,10 +694,11 @@ tbody td[colspan] {
   text-transform: uppercase;
   font-size: 0.75rem;
   color: var(--accent);
-  padding: 0.55rem 0.75rem;
+  padding: 0.55rem 0.8rem;
 }
 
 tbody tr:hover td { background: rgba(31, 58, 95, 0.035); }
+tbody tr.is-ours:hover td { background: rgba(31, 58, 95, 0.10); }
 tbody tr:hover td[colspan] { background: rgba(31, 58, 95, 0.045); }
 
 /* ----------------------------------------------------------------- bibtex */
@@ -655,6 +800,7 @@ code {
   .section { padding: 2.5rem 0; }
   .abstract p { font-size: 1.0625rem; }
   figcaption { padding-left: 0.75rem; }
+  .cards { grid-template-columns: 1fr; gap: 0.9rem; }
 
   /* the column gets too narrow for gap-free justification */
   .abstract p,
