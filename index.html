@@ -13,8 +13,10 @@
 
        IMAGES needed in static/images/ (lowercase, no spaces):
          architecture.png    - Figure 1, selector/generator/reward architecture
-         qualitative.png     - Figure 2, single vs SFT vs PersuaRL example
          social_preview.png  - 1200x630 link-preview card
+
+       Kept in static/images/ but no longer used by the page:
+         qualitative.png, reward_curves.png, ablation_tools.png
          favicon.ico         - optional
 
        LAYOUT: styles live in static/css/paper.css, behaviour in
@@ -166,6 +168,13 @@
         <span class="note">*&thinsp;Corresponding author</span>
       </p>
 
+      <p class="tldr">
+        Insurance agents have to <b>persuade</b>, not just inform. PersuaRL learns &mdash; by
+        reinforcement &mdash; <b>which persuasion experts to consult at every turn</b>, and human raters
+        score its replies <b>4.36/5</b> on persuasive effectiveness where the same model after supervised
+        fine-tuning scores 2.46.
+      </p>
+
       <div class="resources">
         <!-- placeholder until the camera-ready and arXiv links exist: rendered
              as spans, so there is nothing to click and no dead URL. Swap each
@@ -189,7 +198,7 @@
           <em class="soon">soon</em>
         </span>
 
-        <a class="resource" href="https://github.com/Rohan9182/PersuaRL" target="_blank" rel="noopener">
+        <a class="resource is-primary" href="https://github.com/Rohan9182/PersuaRL" target="_blank" rel="noopener">
           <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
             <path d="M8 .2a8 8 0 0 0-2.5 15.6c.4.07.55-.17.55-.38l-.01-1.34c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 8 .2Z"/>
           </svg>
@@ -248,6 +257,24 @@
           responses.
         </p>
       </div>
+
+      <div class="highlights">
+        <div class="highlight">
+          <span class="hl-num">1st</span>
+          <p>framework to <b>learn</b> expert-selection policies for persuasion with reinforcement
+             learning, rather than routing by prompt or heuristic.</p>
+        </div>
+        <div class="highlight">
+          <span class="hl-num">1,931</span>
+          <p>dialogues in <b>InsureDial</b>, the first persuasive dialogue corpus for motor insurance,
+             annotated on four layers.</p>
+        </div>
+        <div class="highlight">
+          <span class="hl-num">+77%</span>
+          <p>human-rated <b>persuasive effectiveness</b> over supervised fine-tuning, on the same
+             backbone.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -291,18 +318,17 @@
             <li><b>Keyterm</b> &mdash; terms like <i>zero depreciation</i>.</li>
             <li><b>Sentiment</b> &mdash; Positive, Neutral or Negative.</li>
           </ul>
-          <p>Selected outputs are packed with the context for the generator.</p>
         </div>
 
         <div class="card">
           <span class="card-icon" aria-hidden="true">&#9878;&#65039;</span>
           <h3><span class="num">&#9314;</span> Composite Reward</h3>
-          <p>No single metric captures persuasion, so five signals combine:</p>
+          <p>Five signals shape the reward:</p>
           <ul class="kv">
             <li><b>R1 / R2</b> &mdash; strategy and intent consistency.</li>
             <li><b>R3</b> &mdash; contextual appropriateness.</li>
             <li><b>R4</b> &mdash; non-repetitiveness.</li>
-            <li><b>R5</b> &mdash; judge score from Prometheus-7B.</li>
+            <li><b>R5</b> &mdash; judge score, Prometheus-7B.</li>
           </ul>
           <p class="card-note">
             &beta; = (0.15, 0.15, 0.20, 0.15, 0.35), plus penalties against over-selection.
@@ -334,12 +360,18 @@
         <h2 class="section-title">InsureDial</h2>
       </div>
 
+      <div class="stats">
+        <div class="stat"><span class="stat-num">1,931</span><span class="stat-label">Dialogues</span></div>
+        <div class="stat"><span class="stat-num">26,766</span><span class="stat-label">Utterances</span></div>
+        <div class="stat"><span class="stat-num">4</span><span class="stat-label">Annotation layers</span></div>
+        <div class="stat"><span class="stat-num">80.2%</span><span class="stat-label">Annotator agreement</span></div>
+      </div>
+
       <p>
-        No persuasive dialogue dataset existed for the motor insurance domain. <b>InsureDial</b> contains
-        <b>1,931 multi-turn conversations</b> and over <b>26,000 utterances</b> covering policy quotes,
-        coverage details and price inquiries, with terminology drawn from leading motor insurance
-        providers. It was built with a human-in-the-loop pipeline &mdash; 50 expert-validated seed
-        dialogues, prompt selection at &kappa; = 80.2% agreement, GPT-4o generation, then human review
+        No persuasive dialogue dataset existed for the motor insurance domain. <b>InsureDial</b> covers
+        policy quotes, coverage details and price inquiries, with terminology drawn from leading motor
+        insurance providers. It was built with a human-in-the-loop pipeline &mdash; 50 expert-validated
+        seed dialogues, prompt selection by annotator agreement, GPT-4o generation, then human review
         &mdash; and every dialogue is annotated for engagement strategy, user intent, sentiment and key
         domain terms.
       </p>
@@ -420,8 +452,9 @@
         The Single &rarr; SFT &rarr; PersuaRL ordering holds on every backbone. SFT adapts a model to the
         insurance domain but saturates at surface-level generation; PersuaRL pushes past that plateau,
         adding up to 0.07 BLEU-2 and 0.05 ROUGE-1 over the fine-tuned model, alongside the largest gains
-        in judge score. The same ordering holds on the out-of-domain DEAL negotiation benchmark reported in the
-        paper, suggesting the learned selector policies capture domain-agnostic persuasion patterns.
+        in judge score. The same ordering holds on the out-of-domain DEAL negotiation benchmark reported
+        in the paper, suggesting the learned selector policies capture domain-agnostic persuasion
+        patterns.
       </p>
       </div>
 
@@ -459,6 +492,12 @@
           </tbody>
         </table>
       </div>
+
+      <p class="pullquote">
+        The gap human raters see is far larger than the automatic metrics suggest: on Llama-3.1-8B,
+        persuasive effectiveness rises from <b>2.46</b> after supervised fine-tuning to <b>4.36</b> with
+        PersuaRL &mdash; and the pattern repeats on every backbone, at every scale tested.
+      </p>
       </div>
 
       <div class="tab-panel" id="tabpanel-ablation" role="tabpanel" aria-labelledby="tabbtn-ablation" hidden>
@@ -493,15 +532,6 @@
       </div>
       </div>
 
-      <figure>
-        <img src="static/images/qualitative.png"
-             alt="Comparison of single-shot, SFT and PersuaRL responses to the same user utterance">
-        <figcaption>
-          <b>Figure 2.</b> Responses to the same user utterance from the single-shot baseline, the SFT
-          model, and <i>PersuaRL</i>. PersuaRL opens by acknowledging the user's situation before
-          presenting coverage, where the baselines list features without user-centric framing.
-        </figcaption>
-      </figure>
     </div>
   </section>
 

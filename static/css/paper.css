@@ -14,6 +14,15 @@
   --accent:     #1f3a5f;
   --accent-dim: #7d8ba0;
 
+  /* secondary hues, used only as tints behind icons and in the top ribbon —
+     enough colour to break up the cream, not enough to fight the navy */
+  --tint-blue:   #e6edf7;
+  --tint-green:  #e4f0e8;
+  --tint-amber:  #f8efdd;
+  --tint-violet: #eee9f6;
+  --hue-green:   #2f6f5f;
+  --hue-amber:   #b8862f;
+
   --serif: "Source Serif 4", "Source Serif Pro", Charter, "Iowan Old Style",
            Georgia, "Times New Roman", serif;
   --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -51,7 +60,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   line-height: 1.72;
   font-variant-numeric: oldstyle-nums proportional-nums;
   -webkit-font-smoothing: antialiased;
@@ -75,6 +84,15 @@ a:hover { border-bottom-color: var(--accent); background: rgba(31, 58, 95, 0.05)
   background: rgba(253, 252, 250, 0.94);
   backdrop-filter: saturate(180%) blur(8px);
   border-bottom: 1px solid var(--rule-soft);
+}
+
+/* colour ribbon across the very top of the page */
+.masthead::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--hue-green) 55%, var(--hue-amber));
 }
 
 .masthead-inner {
@@ -208,20 +226,27 @@ a:hover { border-bottom-color: var(--accent); background: rgba(31, 58, 95, 0.05)
 /* ------------------------------------------------------------- title block */
 
 .titleblock {
-  padding: 4.5rem 0 2.75rem;
+  padding: 4rem 0 2.75rem;
   border-bottom: 1px solid var(--rule);
+  background: linear-gradient(180deg, #f7f4ee 0%, var(--paper) 62%);
 }
 
+/* venue reads as a badge rather than a line of grey caps */
 .venue {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--sans);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent);
+  background: rgba(31, 58, 95, 0.08);
+  border-radius: var(--r-pill);
+  padding: 0.4rem 0.85rem;
   margin: 0 0 1.5rem;
 }
-.venue span { color: var(--rule); margin: 0 0.6rem; }
+.venue span { color: var(--accent-dim); margin: 0 0.5rem; }
 
 .paper-title {
   font-family: var(--serif);
@@ -263,6 +288,85 @@ a:hover { border-bottom-color: var(--accent); background: rgba(31, 58, 95, 0.05)
 .affil sup { font-size: 0.75em; color: var(--accent-dim); }
 .affil .note { font-size: 0.8125rem; font-style: italic; }
 
+/* the line under a section heading follows the heading: centred, no justify */
+.lead {
+  max-width: 42rem;
+  margin: 0 auto 0.5rem;
+  text-align: center;
+  font-size: 1.1875rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* one-sentence pitch directly under the authors */
+.tldr {
+  max-width: var(--measure);
+  margin: 1.75rem 0 0;
+  padding: 0.15rem 0 0.15rem 1.05rem;
+  border-left: 4px solid var(--accent);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.tldr b { color: var(--accent); }
+
+/* ------------------------------------------------------------- highlights */
+
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  max-width: var(--measure);
+  margin: 2rem 0 0;
+}
+
+.highlight {
+  background: #fff;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem 1.25rem 1.3rem;
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+.highlight:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.hl-num {
+  display: block;
+  font-family: var(--serif);
+  font-size: 2.35rem;
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--accent);
+  font-variant-numeric: lining-nums;
+}
+.highlight:nth-child(2) .hl-num { color: var(--hue-green); }
+.highlight:nth-child(3) .hl-num { color: var(--hue-amber); }
+
+.highlight p {
+  max-width: none;
+  text-align: left;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0.5rem 0 0;
+}
+
+/* a single result, called out of the table */
+.pullquote {
+  max-width: var(--measure);
+  margin: 1.4rem 0;
+  padding: 1rem 1.15rem;
+  background: #fff;
+  border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--hue-green);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  box-shadow: var(--shadow-sm);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--ink);
+}
+
 /* ------------------------------------------------------------------- links */
 
 .resources {
@@ -301,6 +405,18 @@ a:hover { border-bottom-color: var(--accent); background: rgba(31, 58, 95, 0.05)
 
 /* a resource whose link does not exist yet: still legible, plainly not
    clickable, and it never lights up on hover */
+/* one filled button so the link row has a colour anchor */
+.resource.is-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.resource.is-primary:hover {
+  background: #162944;
+  border-color: #162944;
+  color: #fff;
+}
+
 .resource.is-pending {
   color: var(--muted);
   background: transparent;
@@ -352,7 +468,7 @@ figure img {
 }
 figcaption {
   font-family: var(--sans);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.65;
   color: var(--muted);
   margin-top: 0.85rem;
@@ -367,50 +483,59 @@ figcaption b, .tcap b { color: var(--ink-soft); }
 /* ---------------------------------------------------------------- sections */
 
 .section {
-  padding: 3.5rem 0;
+  padding: 4.5rem 0;
   border-bottom: 1px solid var(--rule-soft);
 }
 .section:last-of-type { border-bottom: 0; }
 .section.tinted {
-  background: var(--panel);
+  background: linear-gradient(180deg, #f8f6f2 0%, var(--panel) 45%, #f3f0ea 100%);
   border-bottom-color: var(--rule);
 }
 
+/* Section openings are centred and set large, so each one reads as a fresh
+   chapter rather than a run-on of the previous section. */
 .section-head {
   display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin: 0 0 1.75rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid var(--ink);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 2rem;
   max-width: var(--measure);
+  text-align: center;
+}
+.section-head::after {
+  content: "";
+  width: 4.5rem;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--hue-green));
 }
 
 .section-num {
   font-family: var(--sans);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--accent-dim);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #fff;
+  background: var(--accent);
+  border-radius: var(--r-pill);
+  padding: 0.35rem 1rem;
+  box-shadow: 0 2px 6px rgba(31, 58, 95, 0.22);
   flex: none;
 }
 
 h2.section-title {
-  font-family: var(--sans);
-  font-size: 1.1875rem;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 1.15rem + 1.9vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.012em;
+  text-transform: none;
   margin: 0;
 }
 
 /* ------------------------------------------------------------------ cards
    Stage cards: one per step of the method, two to a row. */
-
-.lead {
-  font-size: 1.0625rem;
-  color: var(--ink-soft);
-}
 
 /* square tiles. `aspect-ratio` cannot do this: on a grid item it suppresses
    stretch alignment, so the tiles stop matching each other. Instead the rows
@@ -433,19 +558,38 @@ h2.section-title {
   border: 1px solid var(--rule-soft);
   border-radius: var(--r-md);
   box-shadow: var(--shadow-sm);
-  padding: 1.5rem 1.5rem 1.35rem;
+  padding: 1.4rem 1.45rem 1.3rem;
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+.card:hover {
+  border-color: var(--rule);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
+/* the emoji sits on a tinted tile — one hue per stage */
 .card-icon {
-  display: block;
-  font-size: 1.35rem;
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 1.15rem;
   line-height: 1;
-  margin-bottom: 0.7rem;
+  border-radius: var(--r-sm);
+  margin-bottom: 0.65rem;
+}
+.card:nth-child(1) .card-icon { background: var(--tint-blue); }
+.card:nth-child(2) .card-icon { background: var(--tint-green); }
+.card:nth-child(3) .card-icon { background: var(--tint-amber); }
+.card:nth-child(4) .card-icon { background: var(--tint-violet); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .card:hover { transform: none; transition: none; }
 }
 
 .card h3 {
   font-family: var(--sans);
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: 600;
   letter-spacing: -0.005em;
   color: var(--accent);
@@ -486,6 +630,53 @@ h2.section-title {
   color: var(--ink-soft);
 }
 
+/* ------------------------------------------------------------------ stats
+   Headline numbers for the dataset, so the section leads with something
+   other than a wall of prose. */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  max-width: var(--measure);
+  margin: 1.75rem 0 2rem;
+}
+
+.stat {
+  background: #fff;
+  border: 1px solid var(--rule-soft);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-sm);
+  padding: 1.1rem 0.6rem 1rem;
+  text-align: center;
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+.stat:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.stat:nth-child(2) { border-top-color: var(--hue-green); }
+.stat:nth-child(3) { border-top-color: var(--hue-amber); }
+.stat:nth-child(4) { border-top-color: var(--accent-dim); }
+
+.stat-num {
+  display: block;
+  font-family: var(--serif);
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: lining-nums;
+}
+.stat-label {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 /* ------------------------------------------------------------------- tabs
    Switches between panels of one section (used in Results). Without JS the
    first panel stays open and the rest keep their `hidden` attribute. */
@@ -508,9 +699,9 @@ h2.section-title {
   border: 0;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
-  padding: 0.5rem 0.1rem 0.6rem;
+  padding: 0.55rem 0.1rem 0.7rem;
   font-family: var(--sans);
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
   font-weight: 600;
   color: var(--muted);
   white-space: nowrap;
@@ -518,7 +709,7 @@ h2.section-title {
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 .tab:hover { color: var(--ink); }
-.tab.is-active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab.is-active { color: var(--accent); border-bottom-color: var(--accent); border-bottom-width: 3px; }
 .tab:focus-visible { outline: 2px solid var(--accent-dim); outline-offset: 3px; }
 
 .tab-panel[hidden] { display: none; }
@@ -568,8 +759,17 @@ figcaption,
   text-justify: inter-word;
 }
 
+/* …and the pieces that opt out of it. These must come after the rule above:
+   a card or tile is too narrow to justify without opening word gaps. */
+.card p,
+.card ul,
+.highlight p,
+p.pullquote,
+p.card-note { text-align: left; }
+p.lead { text-align: center; }
+
 .abstract p {
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1.8;
 }
 .abstract p::first-line { font-variant-caps: normal; }
@@ -606,7 +806,7 @@ sub, sup { line-height: 0; }
 
 .tcap {
   font-family: var(--sans);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.6;
   color: var(--muted);
   max-width: var(--measure);
@@ -629,7 +829,7 @@ table {
   border-collapse: collapse;
   width: 100%;
   font-family: var(--sans);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-variant-numeric: tabular-nums lining-nums;
   white-space: nowrap;
 }
@@ -640,7 +840,7 @@ thead th {
   text-align: center;
   vertical-align: bottom;
   white-space: normal;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: 0.07em;
@@ -799,8 +999,15 @@ code {
   .titleblock { padding: 2.75rem 0 2rem; }
   .section { padding: 2.5rem 0; }
   .abstract p { font-size: 1.0625rem; }
+  .stat-num { font-size: 1.75rem; }
+  .hl-num { font-size: 2rem; }
+  .lead { font-size: 1.0625rem; }
+  .tab { font-size: 0.9375rem; }
   figcaption { padding-left: 0.75rem; }
   .cards { grid-template-columns: 1fr; gap: 0.9rem; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .highlights { grid-template-columns: 1fr; }
+  .tldr { font-size: 1.0625rem; }
 
   /* the column gets too narrow for gap-free justification */
   .abstract p,
