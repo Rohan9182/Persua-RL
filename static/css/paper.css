@@ -60,8 +60,10 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 1.125rem;
-  line-height: 1.72;
+  font-size: 1.0625rem;
+  /* the column is wide for this size, so the lines get extra leading to keep
+     the eye from dropping a row on the return sweep */
+  line-height: 1.78;
   font-variant-numeric: oldstyle-nums proportional-nums;
   -webkit-font-smoothing: antialiased;
 }
@@ -347,8 +349,8 @@ html.js-anim .stats .stat:nth-child(4) { transition-delay: 0.21s; }
   max-width: 42rem;
   margin: 0 auto 0.5rem;
   text-align: center;
-  font-size: 1.1875rem;
-  line-height: 1.6;
+  font-size: 1.125rem;
+  line-height: 1.62;
   color: var(--ink-soft);
 }
 
@@ -358,7 +360,7 @@ html.js-anim .stats .stat:nth-child(4) { transition-delay: 0.21s; }
   margin: 1.75rem 0 0;
   padding: 0.15rem 0 0.15rem 1.05rem;
   border-left: 4px solid var(--accent);
-  font-size: 1.25rem;
+  font-size: 1.1875rem;
   line-height: 1.6;
   color: var(--ink);
 }
@@ -831,8 +833,8 @@ p.card-note { text-align: left; }
 p.lead { text-align: center; }
 
 .abstract p {
-  font-size: 1.1875rem;
-  line-height: 1.8;
+  font-size: 1.125rem;
+  line-height: 1.82;
 }
 .abstract p::first-line { font-variant-caps: normal; }
 
