@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="989.8px" height="637px" viewBox="8.7 1.5 989.8 637">
+  <rect x="8.7" y="1.5" width="989.8" height="637" fill="#FFFFFF"/>
+  <rect x="34" y="14" width="680.5" height="112" rx="8" ry="8" fill="#F1EFE8" stroke="#888780" stroke-width="1"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="44" y="29.81" font-size="17" fill="#2C2C2A" font-weight="bold" xml:space="preserve">Dialogue context x<tspan font-size="12.75" dy="4.25">t</tspan></text>
+  </g>
+  <rect x="44" y="40" width="240" height="78" rx="5" ry="5" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="50" y="58.65" font-size="15" fill="#444441" font-weight="bold" xml:space="preserve">Conversation history</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="50" y="75.69" font-size="13" fill="#5F5E5A" xml:space="preserve">u<tspan font-size="9.75" dy="3.25">1</tspan><tspan dy="-3.25">, a</tspan><tspan font-size="9.75" dy="3.25">1</tspan><tspan dy="-3.25">, …, u</tspan><tspan font-size="9.75" dy="3.25">t−1</tspan><tspan dy="-3.25">, a</tspan><tspan font-size="9.75" dy="3.25">t−1</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="50" y="102.09" font-size="13" fill="#888780" xml:space="preserve">User: I ride a 2021 Honda…</text>
+  </g>
+  <rect x="290" y="40" width="420.5" height="78" rx="5" ry="5" fill="#FFFFFF" stroke="#888780" stroke-width="1"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="296" y="53.95" font-size="15" fill="#444441" font-weight="bold" xml:space="preserve">User utterance u<tspan font-size="11.25" dy="3.75">t</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="500.25" y="81.22" font-size="14" fill="#2C2C2A" text-anchor="middle" font-style="italic" xml:space="preserve">“I do a lot of weekend trips, so I really need peace of mind on the </text>
+    <text x="500.25" y="98.02" font-size="14" fill="#2C2C2A" text-anchor="middle" font-style="italic" xml:space="preserve">road. Does your plan cover roadside assistance if I get stranded?”</text>
+  </g>
+  <path d="M 374.25 126 L 374.25 144.95" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 370.6 139.11 L 374.25 146.41 L 377.9 139.11" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 34 70 L 22 70 L 22 393 L 189.09 393" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 183.25 396.65 L 190.55 393 L 183.25 389.35" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="32" y="380.09" font-size="13" fill="#5F5E5A" xml:space="preserve">x<tspan font-size="9.75" dy="3.25">t</tspan></text>
+  </g>
+  <rect x="242" y="148" width="260" height="70" rx="6" ry="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.2"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="284" y="169.47" font-size="19" fill="#26215C" font-weight="bold" xml:space="preserve">Selector policy π<tspan font-size="14.25" dy="4.75">θ</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="372" y="187.72" font-size="14" fill="#534AB7" text-anchor="middle" xml:space="preserve">Single-step decision per turn</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="372" y="203.72" font-size="14" fill="#534AB7" text-anchor="middle" xml:space="preserve">lightweight transformer, GRPO</text>
+  </g>
+  <path d="M 372 218 L 372 232" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 114 232 L 630 232" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="34" y="212.09" font-size="13" fill="#5F5E5A" xml:space="preserve">mask o<tspan font-size="9.75" dy="3.25">t</tspan><tspan dy="-3.25"> = [1, 1, 1, 0]</tspan></text>
+  </g>
+  <path d="M 114 262 L 114 277.09" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 110.35 271.25 L 114 278.55 L 117.65 271.25" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <rect x="34" y="280" width="160" height="52" rx="6" ry="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.2"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="114" y="300.55" font-size="15" fill="#04342C" text-anchor="middle" font-weight="bold" xml:space="preserve">Engagement expert</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="114" y="317.69" font-size="13" fill="#0F6E56" text-anchor="middle" xml:space="preserve">Emotional appeal</text>
+  </g>
+  <path d="M 114 332 L 114 348" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 286 232 L 286 242" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 286 262 L 286 277.09" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 282.35 271.25 L 286 278.55 L 289.65 271.25" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <rect x="206" y="280" width="160" height="52" rx="6" ry="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.2"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="286" y="299.65" font-size="15" fill="#04342C" text-anchor="middle" font-weight="bold" xml:space="preserve">Intent expert</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="286" y="317.69" font-size="13" fill="#0F6E56" text-anchor="middle" xml:space="preserve">Ask_Coverage_Details</text>
+  </g>
+  <path d="M 286 332 L 286 348" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 458 232 L 458 242" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <rect x="448" y="242" width="20" height="20" rx="3" ry="3" fill="#534AB7" stroke="none"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="458" y="254.09" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="bold" xml:space="preserve">1</text>
+  </g>
+  <path d="M 458 262 L 458 277.09" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 454.35 271.25 L 458 278.55 L 461.65 271.25" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <rect x="378" y="280" width="160" height="52" rx="6" ry="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.2"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="458" y="299.65" font-size="15" fill="#04342C" text-anchor="middle" font-weight="bold" xml:space="preserve">Keyterm expert</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="458" y="317.69" font-size="13" fill="#0F6E56" text-anchor="middle" xml:space="preserve">roadside assistance</text>
+  </g>
+  <path d="M 458 332 L 458 348" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 630 232 L 630 242" fill="none" stroke="#B4B2A9" stroke-width="1.3" stroke-miterlimit="10" stroke-dasharray="3 3"/>
+  <rect x="620" y="242" width="20" height="20" rx="3" ry="3" fill="#FFFFFF" stroke="#B4B2A9" stroke-width="1"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="630" y="254.09" font-size="13" fill="#888780" text-anchor="middle" font-weight="bold" xml:space="preserve">0</text>
+  </g>
+  <rect x="550" y="280" width="160" height="52" rx="6" ry="6" fill="#FBFBF9" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 3"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="630" y="298.72" font-size="14" fill="#888780" text-anchor="middle" font-weight="bold" xml:space="preserve">Sentiment expert</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="630" y="317.69" font-size="13" fill="#888780" text-anchor="middle" xml:space="preserve">not selected</text>
+  </g>
+  <path d="M 114 348 L 458 348" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 372 348 L 372 365.09" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 368.35 359.25 L 372 366.55 L 375.65 359.25" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="468" y="351.69" font-size="13" fill="#5F5E5A" xml:space="preserve">outputs O<tspan font-size="9.75" dy="3.25">i</tspan><tspan dy="-3.25"> of selected experts</tspan></text>
+  </g>
+  <rect x="192" y="368" width="360" height="50" rx="6" ry="6" fill="#F1EFE8" stroke="#888780" stroke-width="1.2"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="275" y="389.41" font-size="17" fill="#2C2C2A" font-weight="bold" xml:space="preserve">Pack(x<tspan font-size="12.75" dy="4.25">t</tspan><tspan dy="-4.25">; {O</tspan><tspan font-size="12.75" dy="4.25">i</tspan><tspan dy="-4.25">}) → U(x</tspan><tspan font-size="12.75" dy="4.25">t</tspan><tspan dy="-4.25">, o</tspan><tspan font-size="12.75" dy="4.25">t</tspan><tspan dy="-4.25">)</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="372" y="407.69" font-size="13" fill="#444441" text-anchor="middle" xml:space="preserve">Dialogue context + Selected expert outputs</text>
+  </g>
+  <path d="M 372 418 L 372 435.09" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 368.35 429.25 L 372 436.55 L 375.65 429.25" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <rect x="232" y="438" width="280" height="56" rx="6" ry="6" fill="#FAECE7" stroke="#993C1D" stroke-width="1.2"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="314" y="459.57" font-size="19" fill="#4A1B0C" font-weight="bold" xml:space="preserve">Generator A<tspan font-size="14.25" dy="4.75">φ</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="372" y="477.72" font-size="14" fill="#993C1D" text-anchor="middle" xml:space="preserve">Decoder-only LLM, SFT on mask o*</text>
+  </g>
+  <path d="M 372 494 L 372 511.09" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 368.35 505.25 L 372 512.55 L 375.65 505.25" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <rect x="34" y="514" width="676" height="96.74" rx="8" ry="8" fill="#F1EFE8" stroke="#888780" stroke-width="1"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="300" y="528.55" font-size="17" fill="#2C2C2A" font-weight="bold" xml:space="preserve">Agent response y<tspan font-size="12.75" dy="4.25">t</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="42" y="545.76" font-size="14" fill="#2C2C2A" font-weight="bold" font-style="italic" xml:space="preserve"><tspan font-weight="normal">“I completely understand </tspan>how important it is to feel safe and supported during your weekend <tspan fill="rgb(44">rides.</tspan><tspan font-weight="normal" fill="rgb(44"> </tspan></text>
+    <text x="42" y="562.56" font-size="14" fill="rgb(44" font-style="italic" xml:space="preserve">Our comprehensive motor insurance includes third-party, own damage and personal accident cover but</text>
+    <text x="42" y="579.36" font-size="14" fill="rgb(44" font-style="italic" xml:space="preserve">also 24/7 roadside assistance. Whether it’s a flat tyre or a breakdown, <tspan font-weight="bold">help is always just a call away</tspan>, </text>
+    <text x="42" y="596.16" font-size="14" fill="rgb(44" font-style="italic" xml:space="preserve">we’ve got your back wherever the road takes you.”</text>
+  </g>
+  <rect x="726" y="14" width="260" height="612" rx="8" ry="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="733.88" y="32.68" font-size="16" fill="#412402" font-weight="bold" xml:space="preserve">Training: alternating optimization</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="733.88" y="49.69" font-size="13" fill="#633806" xml:space="preserve">selector and generator updated in turn;</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="733.88" y="65.69" font-size="13" fill="#633806" xml:space="preserve">experts and reward models frozen.</text>
+  </g>
+  <rect x="735.45" y="148" width="200.55" height="64" rx="5" ry="5" fill="#FFFFFF" stroke="#534AB7" stroke-width="1.6"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="742.32" y="168.65" font-size="15" fill="#26215C" font-weight="bold" xml:space="preserve">Selector step (GRPO)</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="742.32" y="187.72" font-size="14" fill="#444441" xml:space="preserve">A<tspan font-size="10.5" dy="3.5">φ</tspan><tspan dy="-3.5"> fixed; sample G = 8 masks</tspan></text>
+  </g>
+  <rect x="735.45" y="436" width="211.15" height="64" rx="5" ry="5" fill="#FFFFFF" stroke="#993C1D" stroke-width="1.6"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="742.68" y="456.65" font-size="15" fill="#4A1B0C" font-weight="bold" xml:space="preserve">Generator step (SFT)</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="742.68" y="475.72" font-size="14" fill="#444441" xml:space="preserve"><tspan fill="#26215C">π</tspan><tspan fill="#26215C" font-size="10.5" dy="3.5">θ </tspan><tspan dy="-3.5">fixed; take best mask o*</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="780" y="282.09" font-size="13" fill="#444441" xml:space="preserve">o* (best mask)</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="826.85" y="392.09" font-size="13" fill="#444441" xml:space="preserve">improved A<tspan font-size="9.75" dy="3.25">φ</tspan></text>
+  </g>
+  <rect x="733.39" y="506" width="240" height="112" rx="5" ry="5" fill="#FFFFFF" stroke="#BA7517" stroke-width="1"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="741.23" y="519.95" font-size="15" fill="#412402" font-weight="bold" xml:space="preserve">Frozen reward models</text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="741.23" y="537.68" font-size="14" fill="#854F0B" xml:space="preserve">R<tspan font-size="10.5" dy="3.5">1</tspan><tspan dy="-3.5"> Engagement strategy consistency</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="741.23" y="554.28" font-size="14" fill="#854F0B" xml:space="preserve">R<tspan font-size="10.5" dy="3.5">2</tspan><tspan dy="-3.5"> Intent consistency</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="741.23" y="570.87" font-size="14" fill="#854F0B" xml:space="preserve">R<tspan font-size="10.5" dy="3.5">3</tspan><tspan dy="-3.5"> Contextual appropriateness</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="741.23" y="587.46" font-size="14" fill="#854F0B" xml:space="preserve">R<tspan font-size="10.5" dy="3.5">4</tspan><tspan dy="-3.5"> Non-repetitiveness</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="741.23" y="604.06" font-size="14" fill="#854F0B" xml:space="preserve">R<tspan font-size="10.5" dy="3.5">5</tspan><tspan dy="-3.5"> Judge reward</tspan></text>
+  </g>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="973.39" y="344.69" font-size="13" fill="#854F0B" xml:space="preserve">R</text>
+  </g>
+  <path d="M 771.17 212 L 773.03 433.09" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 769.33 427.28 L 773.04 434.55 L 776.63 427.22" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 908.99 436 L 907.14 213.88" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 910.84 219.7 L 907.13 212.43 L 903.54 219.76" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 963.31 504.99 L 963.31 180 L 938.91 180" fill="none" stroke="#854F0B" stroke-width="1.3" stroke-miterlimit="10" stroke-dasharray="6 4"/>
+  <path d="M 944.75 176.35 L 937.45 180 L 944.75 183.65" fill="none" stroke="#854F0B" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 710 562.37 L 730.48 562.05" fill="none" stroke="#854F0B" stroke-width="1.3" stroke-miterlimit="10" stroke-dasharray="6 4"/>
+  <path d="M 724.7 565.79 L 731.94 562.02 L 724.58 558.49" fill="none" stroke="#854F0B" stroke-width="1.3" stroke-miterlimit="10"/>
+  <path d="M 735.45 183 L 504.91 183" fill="none" stroke="#854F0B" stroke-width="1.3" stroke-miterlimit="10" stroke-dasharray="6 4"/>
+  <path d="M 510.75 179.35 L 503.45 183 L 510.75 186.65" fill="none" stroke="#854F0B" stroke-width="1.3" stroke-miterlimit="10"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="629.5" y="173.95" font-size="15" fill="#854F0B" text-anchor="middle" xml:space="preserve">update θ</text>
+  </g>
+  <path d="M 735.45 466 L 514.91 466" fill="none" stroke="#854F0B" stroke-width="1.3" stroke-miterlimit="10" stroke-dasharray="6 4"/>
+  <path d="M 520.75 462.35 L 513.45 466 L 520.75 469.65" fill="none" stroke="#854F0B" stroke-width="1.3" stroke-miterlimit="10"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="630" y="451.95" font-size="15" fill="#854F0B" text-anchor="middle" xml:space="preserve">update φ</text>
+  </g>
+  <path d="M 286 232.7 L 286 242.7" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <rect x="276" y="242.7" width="20" height="20" rx="3" ry="3" fill="#534AB7" stroke="none"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="286" y="254.79" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="bold" xml:space="preserve">1</text>
+  </g>
+  <path d="M 114 230 L 114 244" fill="none" stroke="#444441" stroke-width="1.3" stroke-miterlimit="10"/>
+  <rect x="104" y="242" width="20" height="20" rx="3" ry="3" fill="#534AB7" stroke="none"/>
+  <g font-family="Helvetica, Arial, 'Liberation Sans', sans-serif">
+    <text x="114" y="254.09" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="bold" xml:space="preserve">1</text>
+  </g>
+</svg>

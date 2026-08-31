@@ -12,11 +12,12 @@
          ARXIV_ID       -> arXiv id, or delete the arXiv button
 
        IMAGES needed in static/images/ (lowercase, no spaces):
-         architecture.png    - Figure 1, selector/generator/reward architecture
+         architecture.svg    - Figure 1, selector/generator/reward architecture
+         ablation_tools.png  - Figure 2, AllExpert vs Prompting vs PersuaRL
          social_preview.png  - 1200x630 link-preview card
 
        Kept in static/images/ but no longer used by the page:
-         qualitative.png, reward_curves.png, ablation_tools.png
+         architecture.png, qualitative.png, reward_curves.png
          favicon.ico         - optional
 
        LAYOUT: styles live in static/css/paper.css, behaviour in
@@ -76,6 +77,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="static/css/paper.css">
+
+  <!-- Set before first paint so the scroll-reveal styles only ever apply when
+       the script that clears them is running. Without JS nothing is hidden. -->
+  <script>document.documentElement.classList.add('js-anim');</script>
 
   <script defer src="static/js/paper.js"></script>
 
@@ -216,13 +221,14 @@
 
       <!-- ============================== TEASER ============================== -->
       <figure class="lead-figure">
-        <img src="static/images/architecture.png"
-             alt="PersuaRL architecture with selector, generator and reward-guided response generation">
+        <img src="static/images/architecture.svg"
+             alt="PersuaRL architecture with selector, generator, and reward-guided response generation">
         <figcaption>
-          <b>Figure 1.</b> <i>PersuaRL</i> architecture. At each dialogue turn, a GRPO-trained
-          <b>Selector</b> emits a binary mask over four expert modules; the selected expert outputs are
-          packed with the dialogue context and passed to a fine-tuned <b>Generator</b>. A five-component
-          composite reward scores the response and drives the selector's policy update.
+          <b>Figure 1.</b> <i>PersuaRL</i> architecture with selector, generator, and reward-guided
+          response generation. Selector and generator are trained by alternating optimization; experts
+          and reward models are frozen. Solid arrows mark the inference path followed at every turn,
+          dashed arrows carry training-time signals only, and the faded box denotes an expert not
+          selected by the mask.
         </figcaption>
       </figure>
 
@@ -420,7 +426,8 @@
       </p>
 
       <p class="tcap"><b>Table 2.</b> Automatic evaluation on InsureDial. Higher is better on every
-         metric; best result within each model group in <b>bold</b>.</p>
+         metric; best result within each model group in <b>bold</b>.
+         <span class="key-ours">Green rows are ours.</span></p>
       <div class="table-scroll">
         <table>
           <thead>
@@ -461,22 +468,23 @@
       <div class="tab-panel" id="tabpanel-human" role="tabpanel" aria-labelledby="tabbtn-human" hidden>
       <p>
         Annotators with insurance-dialogue expertise rated 30% of a randomly sampled test set on five
-        dimensions, each on a 5-point scale. Fluency, engagingness and strategy appropriateness are judged
-        per turn; persuasive effectiveness and resistance handling per dialogue.
+        dimensions, each on a 5-point scale: Fluency (F), Engagingness (E), Persuasive Effectiveness (PE),
+        Strategy Appropriateness (SA) and Resistance Handling (RH). F, E and SA are judged per turn; PE
+        and RH per dialogue.
       </p>
 
       <p class="tcap"><b>Table 3.</b> Human evaluation on InsureDial. Higher is better on every
-         dimension.</p>
+         dimension. <span class="key-ours">Green rows are ours.</span></p>
       <div class="table-scroll">
         <table>
           <thead>
             <tr>
               <th>Model</th>
-              <th>Fluency</th>
-              <th>Engagingness</th>
-              <th>Persuasive Effectiveness</th>
-              <th>Strategy Appropriateness</th>
-              <th>Resistance Handling</th>
+              <th>F</th>
+              <th>E</th>
+              <th>PE</th>
+              <th>SA</th>
+              <th>RH</th>
             </tr>
           </thead>
           <tbody>
@@ -508,7 +516,8 @@
         to 0.572 for prompting on Llama-3B.
       </p>
 
-      <p class="tcap"><b>Table 4.</b> Expert-module ablation on the Qwen 2.5 3B backbone.</p>
+      <p class="tcap"><b>Table 4.</b> Expert-module ablation on the Qwen 2.5 3B backbone.
+         <span class="key-ours">Green row is ours.</span></p>
       <div class="table-scroll">
         <table>
           <thead>
@@ -530,6 +539,16 @@
           </tbody>
         </table>
       </div>
+
+      <figure>
+        <img src="static/images/ablation_tools.png"
+             alt="Bar charts comparing all-expert routing, prompt-based routing and reward-driven PersuaRL selection">
+        <figcaption>
+          <b>Figure 2.</b> BLEU-2, BERTScore-F1 and ROUGE-1 under (a) every expert always active,
+          (b) experts chosen by prompting, and (c) reward-driven selection with <i>PersuaRL</i>.
+          Learned selection wins on every metric and both backbones.
+        </figcaption>
+      </figure>
       </div>
 
     </div>

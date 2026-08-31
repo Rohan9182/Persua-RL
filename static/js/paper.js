@@ -3,6 +3,38 @@
 (function () {
   'use strict';
 
+  // --- scroll reveal ---------------------------------------------------
+  // Keep this list in step with the :is(...) blocks in static/css/paper.css.
+  var REVEAL = '.paper-title, .byline, .affil, .tldr, .resources, .lead-figure,' +
+               '.section-head, .lead, .abstract, .highlight, .stat, .card, .tabs,' +
+               '.tab-panel > p, .tcap, .table-scroll, figure, .section .wrap > p,' +
+               '.bibtex-bar, .section pre, .colophon p';
+
+  function markVisible(el) { el.classList.add('is-visible'); }
+
+  var still = window.matchMedia &&
+              window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var revealObserver = null;
+
+  if (still || !('IntersectionObserver' in window)) {
+    // nothing to animate: make sure the page is simply visible
+    Array.prototype.forEach.call(document.querySelectorAll(REVEAL), markVisible);
+  } else {
+    revealObserver = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        markVisible(entry.target);
+        obs.unobserve(entry.target);
+      });
+      // a little above the fold, so a block is already settled when reached
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+    Array.prototype.forEach.call(document.querySelectorAll(REVEAL), function (el) {
+      revealObserver.observe(el);
+    });
+  }
+
   // --- copy BibTeX -----------------------------------------------------
   var copyBtn = document.querySelector('.copy-btn');
   var bibtex = document.getElementById('bibtex-code');
@@ -81,7 +113,16 @@
         t.classList.toggle('is-active', on);
         t.setAttribute('aria-selected', on ? 'true' : 'false');
         t.tabIndex = on ? 0 : -1;
-        if (panel) panel.hidden = !on;
+        if (!panel) return;
+        panel.hidden = !on;
+        // a panel revealed by a click is already in view: show it outright
+        // rather than waiting on the observer to notice the new box
+        if (on) {
+          Array.prototype.forEach.call(panel.querySelectorAll(REVEAL), function (el) {
+            markVisible(el);
+            if (revealObserver) revealObserver.unobserve(el);
+          });
+        }
       });
     }
 
