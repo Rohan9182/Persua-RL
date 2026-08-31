@@ -264,6 +264,9 @@ html.js-anim .stats .stat:nth-child(4) { transition-delay: 0.21s; }
 @media (min-width: 1320px) and (min-height: 34rem) {
   .side-toc { display: block; }
   .masthead-nav { display: none; }
+
+  /* leave the rail its margin: a broken-out figure stops short of it */
+  figure { --fig-w: min(62rem, calc(100vw - 26rem)); }
 }
 
 /* ------------------------------------------------------------------ layout */
@@ -503,9 +506,16 @@ html.js-anim .stats .stat:nth-child(4) { transition-delay: 0.21s; }
 
 /* ------------------------------------------------------------------ figure */
 
+/* Figures break out of the text column — a diagram earns more width than a
+   line of prose does. Centring is done with margin arithmetic rather than a
+   transform, because .is-visible animates transform and would cancel it:
+   the column's content box is 100%, so the overhang is half the difference. */
 figure {
-  margin: 2.5rem 0;
-  max-width: var(--measure);
+  --fig-w: min(62rem, calc(100vw - 3rem));
+  width: var(--fig-w);
+  max-width: none;
+  margin: 2.75rem 0;
+  margin-left: calc((100% - var(--fig-w)) / 2);
 }
 figure img {
   display: block;
@@ -522,14 +532,15 @@ figcaption {
   font-size: 0.875rem;
   line-height: 1.65;
   color: var(--muted);
-  margin-top: 0.85rem;
+  margin: 0.95rem auto 0;
   padding-left: 0.9rem;
   border-left: 2px solid var(--rule);
-  max-width: var(--measure);
+  max-width: 46rem;   /* the picture may be wide; its caption should not be */
 }
 figcaption b, .tcap b { color: var(--ink-soft); }
 
-.lead-figure { margin: 3rem 0 0; }
+/* keeps the break-out margin-left from the rule above */
+.lead-figure { margin-top: 3.25rem; margin-bottom: 0; }
 
 /* ---------------------------------------------------------------- sections */
 
