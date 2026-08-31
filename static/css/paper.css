@@ -228,9 +228,9 @@ html.js-anim .stats .stat:nth-child(4) { transition-delay: 0.21s; }
 .side-toc {
   position: fixed;
   top: 50%;
-  left: 1.75rem;
+  left: 2rem;
   transform: translateY(-50%);
-  width: 10.5rem;
+  width: 13rem;
   display: none;
   z-index: 30;
 }
@@ -238,11 +238,12 @@ html.js-anim .stats .stat:nth-child(4) { transition-delay: 0.21s; }
 .side-toc a {
   display: flex;
   align-items: baseline;
-  gap: 0.6rem;
-  padding: 0.3rem 0;
+  gap: 0.7rem;
+  padding: 0.5rem 0;
   font-family: var(--sans);
-  font-size: 0.75rem;
-  line-height: 1.35;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
   color: var(--muted);
   border: 0;
   border-bottom: 1px solid transparent;
@@ -252,12 +253,13 @@ html.js-anim .stats .stat:nth-child(4) { transition-delay: 0.21s; }
 
 .side-toc .toc-num {
   flex: none;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   font-variant-numeric: tabular-nums lining-nums;
   color: var(--accent-dim);
 }
 
-.side-toc a.is-active { color: var(--ink); border-bottom-color: var(--ink); }
+.side-toc a.is-active { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
 .side-toc a.is-active .toc-num { color: var(--accent); }
 
 /* only where there is genuinely room beside the 58rem column — and where
@@ -268,7 +270,7 @@ html.js-anim .stats .stat:nth-child(4) { transition-delay: 0.21s; }
   .masthead-nav { display: none; }
 
   /* leave the rail its margin: a broken-out figure stops short of it */
-  figure { --fig-w: min(62rem, calc(100vw - 26rem)); }
+  figure { --fig-w: min(62rem, calc(100vw - 32rem)); }
 }
 
 /* ------------------------------------------------------------------ layout */
